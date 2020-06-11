@@ -10,6 +10,7 @@ import com.enigma.bookstore.repository.IBookRepository;
 import com.enigma.bookstore.repository.ICartItemsRepository;
 import com.enigma.bookstore.repository.IWishListItemsRepository;
 import com.enigma.bookstore.service.implementation.AdminService;
+import com.enigma.bookstore.util.EmailTemplateGenerator;
 import com.enigma.bookstore.util.IMailService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +39,9 @@ public class AdminServiceTest {
 
     @MockBean
     IMailService mailService;
+
+    @MockBean
+    EmailTemplateGenerator emailTemplateGenerator;
 
     @Autowired
     AdminService adminService;
@@ -92,6 +96,7 @@ public class AdminServiceTest {
     void givenBookDetails_WhenAllValidationAreTrue_ShouldReturnBookUpdatedSuccessfullyMessage() {
         when(bookStoreRepository.findById(any())).thenReturn(java.util.Optional.of(new Book()));
         when(wishListItemsRepository.findAllByBookId(any())).thenReturn(wishListItems1);
+        when(emailTemplateGenerator.getBookAvailableInStockTemplate(any())).thenReturn("Shop Now Book Is Available");
         String existingBook = adminService.updateBook(bookDTO, 1);
         Assert.assertEquals("Book Updated successfully.", existingBook);
     }
