@@ -8,6 +8,9 @@ group = 'com.enigma'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+apply plugin: 'war'
+apply plugin: 'application'
+
 repositories {
     mavenCentral()
 }
